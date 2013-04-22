@@ -5,12 +5,24 @@
 	<title>PRodigy, tracking PRs since 2013</title>
 	<meta name="description" content="PRodigy, tracking PRs since 2013">
 	<meta name="author" content="Marc-Oliver Teschke">
-	<link rel="stylesheet" href="css/styles.css?v=1.0">
-	<!--[if lt IE 9]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/stylesheets/jquery.mobile-1.3.1.css">
+	<script src="/scripts/handlebars.js"></script>
+	<script src="/scripts/jquery-1.9.1.min.js"></script>
+	<script src="/scripts/jquery.mobile-1.3.1.min.js"></script>
 </head>
 <body>
-	<script src="js/scripts.js"></script>
+	<script id="page-template" type="text/x-handlebars-template">
+		<div data-role="page">
+			<div data-role="header"><h1>PRodigy</h1></div>
+			<div data-role="content">
+				<ul data-role="listview" data-inset="true">
+					<li><a href="#">lifts</a></li>
+					<li><a href="#">girls</a></li>
+				</ul>
+			</div>
+		</div>
+	</script>
+	<script src="/scripts/prodigy.js"></script>
 </body>
 </html>
