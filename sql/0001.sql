@@ -45,6 +45,8 @@ INSERT INTO exercises VALUES(DEFAULT, 'Lynne', 'Bodyweight bench press (e.g., sa
 INSERT INTO exercises VALUES(DEFAULT, 'Nicole', 'Run 400 meters\nMax rep Pull-ups\nAs many rounds as possible in 20 minutes.\nNote number of pull-ups completed for each round.\n', 1, 1);
 INSERT INTO exercises VALUES(DEFAULT, 'Amanda', '9, 7 and 5 reps of:\nMuscle-ups\nSnatches (135/95 lb.)\nFor Time', 2, 1);
 
+ALTER TABLE exercises ADD COLUMN exercisetype_id INT REFERENCES exercisetypes(id);
+
 CREATE TABLE workouts (
 	id INT PRIMARY KEY auto_increment,
 	date_time INT NOT NULL DEFAULT 0,
