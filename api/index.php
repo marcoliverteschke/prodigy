@@ -10,16 +10,13 @@
 	
 	
 	Flight::route('GET /exercises/@exercisetype_id', function($exercisetype_id){
-	    $exercises = R::findAll('exercises', ' exercisetype_id = :exercisetype_id ', array(':exercisetype_id' => $exercisetype_id));
+	    $exercises = R::find('exercises', ' exercisetype_id = :exercisetype_id ', array(':exercisetype_id' => $exercisetype_id));
 		$exercises_output = array();
 		foreach($exercises as $key => $exercise)
 		{
 			$exercises_output[$key]['id'] = $exercise->id;
 			$exercises_output[$key]['name'] = $exercise->name;
 			$exercises_output[$key]['description'] = $exercise->description;
-//			$exercises_output[$key]['name'] = $exercise->name;
-//			$exercises_output[$key]['name'] = $exercise->name;
-//			$exercises_output[$key]['name'] = $exercise->name;
 		}
 		Flight::json($exercises_output);
 	});

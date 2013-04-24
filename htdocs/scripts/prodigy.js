@@ -7,9 +7,10 @@ $(document).ready(function(){
 
 		// Alter the url according to the anchor's href attribute, and
 		// store the data-foo attribute information with the url
-//		$.mobile.navigate( this.attr( "href" ), {
+		console.log('navigate');
+		$.mobile.navigate( '#exercises', {
 //			foo: this.attr("data-foo")
-//		});
+		});
 
 		// Hypothetical content alteration based on the url. E.g, make
 		// an AJAX request for JSON data and render a template into the page.
