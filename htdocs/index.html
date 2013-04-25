@@ -9,10 +9,19 @@
 	<link rel="stylesheet" href="/stylesheets/jquery.mobile-1.3.1.css">
 	<script src="/scripts/handlebars.js"></script>
 	<script src="/scripts/jquery-1.9.1.min.js"></script>
+	<script src="/scripts/jquerymobile-overrides.js"></script>
 	<script src="/scripts/jquery.mobile-1.3.1.min.js"></script>
 	<script id="page-template" type="text/x-handlebars-template">
-		<div data-role="header"><a href="#" data-icon="back">Back</a><h1>{{title}}</h1></div>
+		<div data-role="header"><a href="#exercisetypes" data-rel="back" data-icon="back">Back</a><h1>{{title}}</h1></div>
 		<div data-role="content">{{{content}}}</div>
+	</script>
+	<script id="exercise-listitem-template" type="text/x-handlebars-template">
+		<li>
+			<a href="#track-exercise/{{id}}">
+				<h2>{{name}}</h2>
+				<p>{{{description}}}</p>
+			</a>
+		</li>
 	</script>
 	<script src="/scripts/prodigy.js"></script></head>
 <body>
