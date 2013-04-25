@@ -1,3 +1,3 @@
-$(document).on("mobileinit", function(){
+/*$(document).on("mobileinit", function(){
 	$.mobile.defaultPageTransition = "slide";
-});
+});*/
