@@ -16,6 +16,8 @@ $(document).ready(function(){
 	exercise_list_template = Handlebars.compile(exercise_list_template_html);
 	exercise_options_template_html = $('#exercise-options-template').html();
 	exercise_options_template = Handlebars.compile(exercise_options_template_html);
+	$('#exercisetypes').prepend(page_template({'title':'', 'content':''}));
+	$('#exercises').prepend(page_template({'title':'', 'content':''}));
 	$('#exercise-now-what').prepend(page_template({'title':'', 'content':''}));
 	route('#exercisetypes');
 });
@@ -27,6 +29,7 @@ function load_exercise_modal(exercise_id, callback)
 		var content = exercise_options_template();
 		$('#exercise-now-what h1').text(data.name);
 		$('#exercise-now-what [data-role="content"]').empty().prepend(content);
+		$('#exercise-now-what [data-rel="back"]').hide();
 		callback();
 	}, 'json');
 }
@@ -35,11 +38,11 @@ function load_exercise_modal(exercise_id, callback)
 function load_exercises_list(exercisetype_id, callback)
 {
 	remove_click_handler();
-	$('#exercises').empty();
 	$.get('/api/exercises/' + exercisetype_id, function(data){
 		var content = exercise_list_template({'items' : data});
-		var context = {'title' : 'EXercises', 'content' : content, 'back_target' : '#exercisetypes'};
-		$('#exercises').prepend(page_template(context))/*.trigger('pagecreate')*/;
+		$('#exercises h1').text('EXercises');
+		$('#exercises [data-role="content"]').empty().prepend(content);
+		$('#exercises [data-rel="back"]').attr('href', '#exercisetypes').show();
 		add_click_handler();
 		callback();
 	}, 'json');
@@ -49,11 +52,13 @@ function load_exercises_list(exercisetype_id, callback)
 function load_exercisetypes_list(callback)
 {
 	remove_click_handler();
-	$('#exercisetypes').empty();
+	$('#exercisetypes [data-role="content"]').empty();
 	$.get('/api/exercisetypes', function(data){
 		var content = exercisetype_list_template({'items' : data});
-		var context = {'title' : 'PRodigy', 'content' : content}
-		$('#exercisetypes').prepend(page_template(context))/*.trigger('pagecreate')*/;
+		$('#exercisetypes h1').text('PRodigy');
+		$('#exercisetypes [data-role="content"]').empty().prepend(content);
+//		$('#exercisetypes [data-role="content"]').find('ul').listview();
+		$('#exercisetypes').trigger('pagecreate');
 		add_click_handler();
 		callback();
 	}, 'json');
@@ -123,3 +128,4 @@ function route(hash, direction)
 function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
+

@@ -5436,7 +5436,6 @@ $.mobile.page.prototype.options.contentTheme = null;
 // TODO remove the buttonMarkup giant selector and move it to the various modules
 //      on which it depends
 $.mobile.document.bind( "pagecreate", function( e ) {
-	console.log($(e.target));
 	var $page = $( e.target ),
 		o = $page.data( "mobile-page" ).options,
 		pageRole = $page.jqmData( "role" ),
