@@ -39,7 +39,7 @@ function load_exercises_list(exercisetype_id, callback)
 	$.get('/api/exercises/' + exercisetype_id, function(data){
 		var content = exercise_list_template({'items' : data});
 		var context = {'title' : 'EXercises', 'content' : content, 'back_target' : '#exercisetypes'};
-		$('#exercises').prepend(page_template(context)).trigger('pagecreate');
+		$('#exercises').prepend(page_template(context))/*.trigger('pagecreate')*/;
 		add_click_handler();
 		callback();
 	}, 'json');
@@ -53,7 +53,7 @@ function load_exercisetypes_list(callback)
 	$.get('/api/exercisetypes', function(data){
 		var content = exercisetype_list_template({'items' : data});
 		var context = {'title' : 'PRodigy', 'content' : content}
-		$('#exercisetypes').prepend(page_template(context)).trigger('pagecreate');
+		$('#exercisetypes').prepend(page_template(context))/*.trigger('pagecreate')*/;
 		add_click_handler();
 		callback();
 	}, 'json');
