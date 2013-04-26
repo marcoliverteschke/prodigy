@@ -42,6 +42,10 @@ function load_exercises_list(exercisetype_id, callback)
 		var content = exercise_list_template({'items' : data});
 		$('#exercises h1').text('EXercises');
 		$('#exercises [data-role="content"]').empty().prepend(content);
+		if($('#exercises').hasClass('ui-page'))
+		{
+			$('#exercises [data-role="content"]').find('[data-role="listview"]').listview();
+		}
 		$('#exercises [data-rel="back"]').attr('href', '#exercisetypes').show();
 		add_click_handler();
 		callback();
@@ -57,7 +61,10 @@ function load_exercisetypes_list(callback)
 		var content = exercisetype_list_template({'items' : data});
 		$('#exercisetypes h1').text('PRodigy');
 		$('#exercisetypes [data-role="content"]').empty().prepend(content);
-//		$('#exercisetypes [data-role="content"]').find('ul').listview();
+		if($('#exercisestypes').hasClass('ui-page'))
+		{
+			$('#exercisestypes [data-role="content"]').find('[data-role="listview"]').listview();
+		}
 		$('#exercisetypes').trigger('pagecreate');
 		add_click_handler();
 		callback();
