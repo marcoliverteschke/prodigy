@@ -105,14 +105,14 @@ function route(hash, direction)
 	switch (hash_split[0]) {
 		case "#exercisetypes":
 			load_exercisetypes_list(function(){
-				$.mobile.changePage('#exercisetypes', {'reverse' : reverse, 'transition': 'slide'});
+				changePage('#exercisetypes');
 			});
 			break;
 		case "#exercises":
 			if(typeof hash_split[1] != "undefined" && isNumber(hash_split[1]))
 			{
 				load_exercises_list(hash_split[1], function(){
-					$.mobile.changePage('#exercises', {'reverse' : reverse, 'transition': 'slide'});
+					changePage('#exercises');
 				});
 			} else {
 				route('#exercisetypes');
@@ -122,7 +122,7 @@ function route(hash, direction)
 			if(typeof hash_split[1] != "undefined" && isNumber(hash_split[1]))
 			{
 				load_exercise_modal(hash_split[1], function(){
-					$.mobile.changePage('#exercise-now-what', {role: "dialog"});
+					changePage('#exercise-now-what');
 				});
 			} else {
 				route('#exercisetypes');
@@ -136,3 +136,9 @@ function isNumber(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+
+function changePage(target)
+{
+	$('[data-role="page"]').hide();
+	$(target).show();
+}
