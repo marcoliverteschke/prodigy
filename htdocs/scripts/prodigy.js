@@ -16,48 +16,46 @@ $(document).ready(function(){
 	exercise_list_template = Handlebars.compile(exercise_list_template_html);
 	exercise_options_template_html = $('#exercise-options-template').html();
 	exercise_options_template = Handlebars.compile(exercise_options_template_html);
+	$('#exercise-now-what').prepend(page_template({'title':'', 'content':''}));
 	route('#exercisetypes');
 });
 
 
 function load_exercise_modal(exercise_id, callback)
 {
-	remove_click_handler();
-	$('#exercise-now-what').empty();
 	$.get('/api/exercise/' + exercise_id, function(data){
 		var content = exercise_options_template();
-		var context = {'title' : data.name, 'content' : content, 'back_target' : '#exercises/' + data.exercisetype_id};
-		$('#exercise-now-what').prepend(page_template(context)).trigger('pagecreate');
+		$('#exercise-now-what h1').text(data.name);
+		$('#exercise-now-what [data-role="content"]').empty().prepend(content);
+		callback();
+	}, 'json');
+}
+
+
+function load_exercises_list(exercisetype_id, callback)
+{
+	remove_click_handler();
+	$('#exercises').empty();
+	$.get('/api/exercises/' + exercisetype_id, function(data){
+		var content = exercise_list_template({'items' : data});
+		var context = {'title' : 'EXercises', 'content' : content, 'back_target' : '#exercisetypes'};
+		$('#exercises').prepend(page_template(context)).trigger('pagecreate');
 		add_click_handler();
 		callback();
 	}, 'json');
 }
 
 
-function load_exercises_list(exercisetype_id)
-{
-	remove_click_handler();
-	$('#exercises').empty();
-	return $.get('/api/exercises/' + exercisetype_id, function(data){
-		var content = exercise_list_template({'items' : data});
-		var context = {'title' : 'EXercises', 'content' : content, 'back_target' : '#exercisetypes'};
-		$('#exercises').prepend(page_template(context)).trigger('pagecreate');
-		add_click_handler();
-		return true;
-	}, 'json');
-}
-
-
-function load_exercisetypes_list()
+function load_exercisetypes_list(callback)
 {
 	remove_click_handler();
 	$('#exercisetypes').empty();
-	return $.get('/api/exercisetypes', function(data){
+	$.get('/api/exercisetypes', function(data){
 		var content = exercisetype_list_template({'items' : data});
 		var context = {'title' : 'PRodigy', 'content' : content}
 		$('#exercisetypes').prepend(page_template(context)).trigger('pagecreate');
 		add_click_handler();
-		return true;
+		callback();
 	}, 'json');
 }
 
@@ -94,18 +92,16 @@ function route(hash, direction)
 
 	switch (hash_split[0]) {
 		case "#exercisetypes":
-			if(load_exercisetypes_list())
-			{
+			load_exercisetypes_list(function(){
 				$.mobile.changePage('#exercisetypes', {'reverse' : reverse, 'transition': 'slide'});
-			}
+			});
 			break;
 		case "#exercises":
 			if(typeof hash_split[1] != "undefined" && isNumber(hash_split[1]))
 			{
-				if(load_exercises_list(hash_split[1]))
-				{
+				load_exercises_list(hash_split[1], function(){
 					$.mobile.changePage('#exercises', {'reverse' : reverse, 'transition': 'slide'});
-				}
+				});
 			} else {
 				route('#exercisetypes');
 			}
@@ -114,11 +110,8 @@ function route(hash, direction)
 			if(typeof hash_split[1] != "undefined" && isNumber(hash_split[1]))
 			{
 				load_exercise_modal(hash_split[1], function(){
-					//$.mobile.changePage('#exercise-now-what', {role: "dialog"});
+					$.mobile.changePage('#exercise-now-what', {role: "dialog"});
 				});
-//				if()
-//				{
-//				}
 			} else {
 				route('#exercisetypes');
 			}
