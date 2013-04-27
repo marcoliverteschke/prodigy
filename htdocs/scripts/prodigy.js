@@ -19,6 +19,10 @@ $(document).ready(function(){
 	$('#exercisetypes').prepend(page_template({'title':'', 'content':''}));
 	$('#exercises').prepend(page_template({'title':'', 'content':''}));
 	$('#exercise-now-what').prepend(page_template({'title':'', 'content':''}));
+	window.onpopstate = function(event){
+		if(typeof event.target.location.hash != "undefined")
+			route(event.target.location.hash, true);
+	};
 	route('#exercisetypes');
 });
 
@@ -80,39 +84,28 @@ function remove_click_handler()
 
 function add_click_handler()
 {
-	// Define a click binding for all anchors in the page
 	$("a").on("click", function(event){
-		// Prevent the usual navigation behavior
 		event.preventDefault();
-
-		// Alter the url according to the anchor's href attribute, and
-		// store the data-foo attribute information with the url
 		route($(this).attr('href'), $(this).attr('data-direction'))
-		// Hypothetical content alteration based on the url. E.g, make
-		// an AJAX request for JSON data and render a template into the page.
-//		alterContent( this.attr("href") );
 	});
 }
 
 
-function route(hash, direction)
+function route(hash, is_history_back)
 {
 	var hash_split = hash.split("/");
-	var reverse = false;
-	if(typeof direction != "undefined")
-		reverse = (direction == "reverse");
 
 	switch (hash_split[0]) {
 		case "#exercisetypes":
 			load_exercisetypes_list(function(){
-				changePage('#exercisetypes');
+				changePage('#exercisetypes', hash, is_history_back);
 			});
 			break;
 		case "#exercises":
 			if(typeof hash_split[1] != "undefined" && isNumber(hash_split[1]))
 			{
 				load_exercises_list(hash_split[1], function(){
-					changePage('#exercises');
+					changePage('#exercises', hash, is_history_back);
 				});
 			} else {
 				route('#exercisetypes');
@@ -122,7 +115,7 @@ function route(hash, direction)
 			if(typeof hash_split[1] != "undefined" && isNumber(hash_split[1]))
 			{
 				load_exercise_modal(hash_split[1], function(){
-					changePage('#exercise-now-what');
+					changePage('#exercise-now-what', hash, is_history_back);
 				});
 			} else {
 				route('#exercisetypes');
@@ -137,8 +130,10 @@ function isNumber(n) {
 }
 
 
-function changePage(target)
+function changePage(target, original_hash, do_not_push)
 {
+	if(!do_not_push)
+		history.pushState({}, original_hash, original_hash);
 	$('[data-role="page"]').hide();
 	$(target).show();
 }
