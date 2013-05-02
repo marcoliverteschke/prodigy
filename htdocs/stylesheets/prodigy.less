@@ -12,6 +12,20 @@ html, body {
 	background-color: #f6f6f6;
 }
 
+[data-role="header"] {
+	border-bottom: 1px solid #dfdfdf;
+	.gradient(#666666, #666666, #999999); 
+
+	h1 {
+		color: #ffffff;
+		font-size: 1em;
+		font-weight: normal;
+		padding: 16px;
+		margin: 0;
+		text-align: center;
+	}
+}
+
 [data-role="listview"] {
 	&, li {
 		.list-reset();
@@ -21,19 +35,23 @@ html, body {
 		background-color: #f4f4f4;
 		border-bottom: 1px solid #dfdfdf;
 		border-top: 1px solid #fafafa;
-		padding: .5em 1em;
+		padding: 8px 16px;
 		
 		.gradient(#f4f4f4, #efefef, #f4f4f4); 
 	}
 	
 	h2 {
-		font-size: 1.5em;
-		font-weight: bold;
+		font-size: 1.25em;
+		font-weight: normal;
 	}
 	
 	a {
 		color: @color-main;
 		text-decoration: none;
+	}
+	
+	i {
+		float: right;
 	}
 }
 

@@ -16,7 +16,7 @@
 	<script id="exercisetype-list-template" type="text/x-handlebars-template">
 		<ul data-role="listview" data-inset="true">
 		{{#each items}}
-			<li><a href="#exercises/{{this.id}}" data-transition="flow">{{this.name}}</a></li>
+			<li><a href="#exercises/{{this.id}}" data-transition="flow"><h2>{{this.name}}<i class="icon-angle-right"></i></h2></a></li>
 		{{/each}}
 		</ul>
 	</script>
